@@ -183,7 +183,10 @@ public struct FloorFilter: View {
     @ViewBuilder private var siteAndFacilitySelector: some View {
         if horizontalSizeClass == .compact {
             Color.clear
-                .sheet(isPresented: .constant(!$isSitesAndFacilitiesHidden.wrappedValue)) {
+                .sheet(isPresented:  Binding<Bool>(
+                    get: { !$isSitesAndFacilitiesHidden.wrappedValue },
+                    set: { $isSitesAndFacilitiesHidden.wrappedValue = !$0 }
+                )) {
                     SiteAndFacilitySelector(isHidden: $isSitesAndFacilitiesHidden)
                 }
         } else {
