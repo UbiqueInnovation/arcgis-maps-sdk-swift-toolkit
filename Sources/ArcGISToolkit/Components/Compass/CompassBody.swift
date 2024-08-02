@@ -18,12 +18,13 @@ import SwiftUI
 struct CompassBody: View {
     var body: some View {
         GeometryReader { geometry in
-            let borderWidth = geometry.size.width * 0.025
-            Circle()
-                .inset(by: borderWidth / 2.0)
-                .stroke(lineWidth: borderWidth)
-                .foregroundColor(.outline)
-                .background(Circle().foregroundColor(.fill))
+            Color.clear
+                .background {
+                    Circle()
+                        .fill(Color(uiColor: UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
+                }
+                .clipped()
+                .shadow(radius: 4)
         }
     }
 }
