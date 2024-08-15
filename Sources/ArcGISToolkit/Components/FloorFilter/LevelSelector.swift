@@ -18,6 +18,8 @@ import ArcGIS
 /// A view which allows selection of levels represented in `FloorFacility`.
 @MainActor
 struct LevelSelector: View {
+    @Environment(\.colorScheme) var colorScheme
+
     /// The view model used by the `LevelsView`.
     @EnvironmentObject var viewModel: FloorFilterViewModel
     
@@ -93,8 +95,8 @@ extension LevelSelector {
     /// - Returns: The button representing the provided level.
     @ViewBuilder func makeLevelButton(_ level: FloorLevel) -> some View {
         Text(level.shortName)
-            .foregroundColor(.primary)
-            .padding([.vertical], 4)
+            .foregroundColor(buttonTextColorFor(level))
+            .padding([.vertical], 6)
             .frame(maxWidth: .infinity)
             .background {
                 RoundedRectangle(cornerRadius: 5)
@@ -112,7 +114,7 @@ extension LevelSelector {
     /// - Returns: The scrollable list of level buttons.
     @ViewBuilder func makeLevelButtons() -> some View {
         ScrollViewReader { proxy in
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 4) {
                     ForEach(filteredLevels, id: \.id) { level in
                         makeLevelButton(level)
@@ -136,7 +138,18 @@ extension LevelSelector {
             return Color.secondary.opacity(0.5)
         }
     }
-    
+
+    /// Determines a appropriate color for the text button in the floor level list.
+    /// - Parameter level: The level represented by the button.
+    /// - Returns: The text color for the button representing the provided level.
+    func buttonTextColorFor(_ level: FloorLevel) -> Color {
+        if viewModel.selection?.level == level {
+            return colorScheme == .dark  ? Color.black : .white
+        } else {
+            return Color.primary
+        }
+    }
+
     /// Scrolls the list within the provided proxy to the button representing the selected level.
     /// - Parameter proxy: The proxy containing the scroll view.
     func scrollToSelectedLevel(with proxy: ScrollViewProxy) {
