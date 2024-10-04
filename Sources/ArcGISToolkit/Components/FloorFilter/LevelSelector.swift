@@ -96,7 +96,8 @@ extension LevelSelector {
     @ViewBuilder func makeLevelButton(_ level: FloorLevel) -> some View {
         Text(level.shortName)
             .foregroundColor(buttonTextColorFor(level))
-            .padding([.vertical], 6)
+            .padding(.top, 7)
+            .padding(.bottom, 5)
             .frame(maxWidth: .infinity)
             .background {
                 RoundedRectangle(cornerRadius: 5)

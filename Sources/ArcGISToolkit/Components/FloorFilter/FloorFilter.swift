@@ -110,7 +110,7 @@ public struct FloorFilter: View {
     private let alignment: Alignment
     
     /// The width of the level selector.
-    private var levelSelectorWidth: CGFloat = 60
+    private var levelSelectorWidth: CGFloat = 40
     
     /// The `Viewpoint` used to pan/zoom to the selected site/facility.
     /// If `nil`, there will be no automatic pan/zoom operations or automatic selection support.

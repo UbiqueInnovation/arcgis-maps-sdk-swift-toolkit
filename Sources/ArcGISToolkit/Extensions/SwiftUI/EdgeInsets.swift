@@ -17,9 +17,9 @@ import SwiftUI
 public extension EdgeInsets {
     /// A reusable set of edge insets for use across toolkit components.
     static let toolkitDefault = Self(
-        top: 8,
+        top: 4,
         leading: 12,
-        bottom: 8,
+        bottom: 4,
         trailing: 12
     )
 }

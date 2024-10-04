@@ -24,16 +24,13 @@ struct EsriBorderViewModifier: ViewModifier {
             .padding(padding)
             .background(Color(uiColor: .systemBackground))
             .clipShape(roundedRect)
-            .overlay(
-                roundedRect
-                    .stroke(lineWidth: 2)
-                    .foregroundColor(Color(uiColor: .separator))
-            )
+//            .overlay(
+//                roundedRect
+//                    .stroke(lineWidth: 2)
+//                    .foregroundColor(Color(uiColor: .separator))
+//            )
             .shadow(
-                color: .gray.opacity(0.4),
-                radius: 3,
-                x: 1,
-                y: 2
+                radius: 4
             )
     }
 }
