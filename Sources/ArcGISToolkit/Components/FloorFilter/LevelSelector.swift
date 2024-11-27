@@ -16,7 +16,7 @@ import SwiftUI
 import ArcGIS
 
 /// A view which allows selection of levels represented in `FloorFacility`.
-@MainActor
+@available(visionOS, unavailable)
 struct LevelSelector: View {
     @Environment(\.colorScheme) var colorScheme
 
@@ -52,6 +52,7 @@ struct LevelSelector: View {
     }
 }
 
+@available(visionOS, unavailable)
 extension LevelSelector {
     /// A list of all the levels to be displayed.
     ///
@@ -125,7 +126,7 @@ extension LevelSelector {
             }
             .frame(maxHeight: contentHeight)
             .onAppear { scrollToSelectedLevel(with: proxy) }
-            .onChange(of: isCollapsed) { _ in scrollToSelectedLevel(with: proxy) }
+            .onChange(isCollapsed) { _ in scrollToSelectedLevel(with: proxy) }
         }
     }
     
