@@ -16,8 +16,10 @@ import SwiftUI
 import ArcGIS
 
 /// A view which allows selection of levels represented in `FloorFacility`.
-@MainActor
+@available(visionOS, unavailable)
 struct LevelSelector: View {
+    @Environment(\.colorScheme) var colorScheme
+
     /// The view model used by the `LevelsView`.
     @EnvironmentObject var viewModel: FloorFilterViewModel
     
@@ -27,7 +29,7 @@ struct LevelSelector: View {
     /// A Boolean value indicating the whether the view shows only the selected level or all levels.
     /// If the value is`false`, the view will display all levels; if it is `true`, the view will
     /// only display the selected level.
-    @State private var isCollapsed: Bool = false
+    @State private var isCollapsed: Bool = true
     
     /// The alignment configuration.
     let isTopAligned: Bool
@@ -50,6 +52,7 @@ struct LevelSelector: View {
     }
 }
 
+@available(visionOS, unavailable)
 extension LevelSelector {
     /// A list of all the levels to be displayed.
     ///
@@ -93,8 +96,9 @@ extension LevelSelector {
     /// - Returns: The button representing the provided level.
     @ViewBuilder func makeLevelButton(_ level: FloorLevel) -> some View {
         Text(level.shortName)
-            .foregroundColor(.primary)
-            .padding([.vertical], 4)
+            .foregroundColor(buttonTextColorFor(level))
+            .padding(.top, 7)
+            .padding(.bottom, 5)
             .frame(maxWidth: .infinity)
             .background {
                 RoundedRectangle(cornerRadius: 5)
@@ -112,7 +116,7 @@ extension LevelSelector {
     /// - Returns: The scrollable list of level buttons.
     @ViewBuilder func makeLevelButtons() -> some View {
         ScrollViewReader { proxy in
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 4) {
                     ForEach(filteredLevels, id: \.id) { level in
                         makeLevelButton(level)
@@ -122,7 +126,7 @@ extension LevelSelector {
             }
             .frame(maxHeight: contentHeight)
             .onAppear { scrollToSelectedLevel(with: proxy) }
-            .onChange(of: isCollapsed) { _ in scrollToSelectedLevel(with: proxy) }
+            .onChange(isCollapsed) { _ in scrollToSelectedLevel(with: proxy) }
         }
     }
     
@@ -136,7 +140,18 @@ extension LevelSelector {
             return Color.secondary.opacity(0.5)
         }
     }
-    
+
+    /// Determines a appropriate color for the text button in the floor level list.
+    /// - Parameter level: The level represented by the button.
+    /// - Returns: The text color for the button representing the provided level.
+    func buttonTextColorFor(_ level: FloorLevel) -> Color {
+        if viewModel.selection?.level == level {
+            return colorScheme == .dark  ? Color.black : .white
+        } else {
+            return Color.primary
+        }
+    }
+
     /// Scrolls the list within the provided proxy to the button representing the selected level.
     /// - Parameter proxy: The proxy containing the scroll view.
     func scrollToSelectedLevel(with proxy: ScrollViewProxy) {
