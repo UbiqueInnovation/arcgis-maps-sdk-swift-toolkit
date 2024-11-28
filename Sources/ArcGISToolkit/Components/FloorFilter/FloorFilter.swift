@@ -81,7 +81,8 @@ public struct FloorFilter: View {
         automaticSelectionMode: FloorFilterAutomaticSelectionMode = .always,
         viewpoint: Binding<Viewpoint?> = .constant(nil),
         isNavigating: Binding<Bool>,
-        selection: Binding<FloorFilterSelection?>? = nil
+        selection: Binding<FloorFilterSelection?>? = nil,
+        userSelectedNewLevel: @escaping ()->Void
     ) {
         _viewModel = StateObject(
             wrappedValue: FloorFilterViewModel(
@@ -94,6 +95,7 @@ public struct FloorFilter: View {
         self.isNavigating = isNavigating
         self.viewpoint = viewpoint
         self.selection = selection
+        self.userSelectedNewLevel = userSelectedNewLevel
     }
     
     /// The view model used by the `FloorFilter`.
@@ -110,6 +112,9 @@ public struct FloorFilter: View {
     
     /// The width of the level selector.
     private var levelSelectorWidth: CGFloat = 40
+    
+    private var userSelectedNewLevel: ()->Void
+
     
     /// The `Viewpoint` used to pan/zoom to the selected site/facility.
     /// If `nil`, there will be no automatic pan/zoom operations or automatic selection support.
@@ -171,7 +176,8 @@ public struct FloorFilter: View {
     @ViewBuilder private var levelSelector: some View {
         LevelSelector(
             isTopAligned: isTopAligned,
-            levels: viewModel.sortedLevels
+            levels: viewModel.sortedLevels,
+            userSelectedNewLevel: userSelectedNewLevel
         )
     }
     

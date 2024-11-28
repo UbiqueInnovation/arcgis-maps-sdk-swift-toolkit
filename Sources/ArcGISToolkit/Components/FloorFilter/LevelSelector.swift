@@ -37,6 +37,8 @@ struct LevelSelector: View {
     /// The levels to display.
     let levels: [FloorLevel]
     
+    var userSelectedNewLevel: ()->Void
+
     public var body: some View {
         VStack {
             if !isTopAligned {
@@ -105,6 +107,7 @@ extension LevelSelector {
                     .fill(buttonColorFor(level))
             }
             .onTapGesture {
+                userSelectedNewLevel()
                 viewModel.setLevel(level)
                 if isCollapsed && levels.count > 1 {
                     isCollapsed.toggle()
