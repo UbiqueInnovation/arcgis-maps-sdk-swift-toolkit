@@ -83,9 +83,9 @@ struct TextInput: View {
                     model.focusedElement = element
                 }
             }
-            .sheet(isPresented: $scannerIsPresented) {
-                CodeScanner(code: $text, isPresented: $scannerIsPresented)
-            }
+//            .sheet(isPresented: $scannerIsPresented) {
+//                CodeScanner(code: $text, isPresented: $scannerIsPresented)
+//            }
             .onValueChange(of: element, when: !element.isMultiline || !fullScreenTextInputIsPresented) { _, newFormattedValue in
                 text = newFormattedValue
             }

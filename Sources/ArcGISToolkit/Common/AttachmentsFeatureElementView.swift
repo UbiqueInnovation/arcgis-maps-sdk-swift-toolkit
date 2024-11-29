@@ -151,7 +151,7 @@ struct AttachmentsFeatureElementView: View {
             Spacer()
             if isEditable,
                let element = featureElement as? AttachmentsFormElement {
-                AttachmentImportMenu(element: element, onAdd: onAdd)
+                //AttachmentImportMenu(element: element, onAdd: onAdd)
             }
         }
     }
