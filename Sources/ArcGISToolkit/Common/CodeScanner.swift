@@ -24,7 +24,7 @@ struct CodeScanner: View {
     
     @State private var cameraAccessIsAuthorized = false
     
-    @StateObject private var cameraRequester = CameraRequester()
+   // @StateObject private var cameraRequester = CameraRequester()
     
     var body: some View {
         if cameraAccessIsAuthorized {
@@ -45,14 +45,14 @@ struct CodeScanner: View {
                 }
         } else {
             Color.clear
-                .onAppear {
-                    cameraRequester.request {
-                        cameraAccessIsAuthorized = true
-                    } onAccessDenied: {
-                        isPresented = false
-                    }
-                }
-                .cameraRequester(cameraRequester)
+//                .onAppear {
+//                    cameraRequester.request {
+//                        cameraAccessIsAuthorized = true
+//                    } onAccessDenied: {
+//                        isPresented = false
+//                    }
+//                }
+//                .cameraRequester(cameraRequester)
         }
     }
 }

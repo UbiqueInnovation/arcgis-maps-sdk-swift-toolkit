@@ -48,7 +48,7 @@ struct AttachmentImportMenu: View {
     @State private var photoPickerIsPresented = false
     
     /// Performs camera authorization request handling.
-    @StateObject private var cameraRequester = CameraRequester()
+    //@StateObject private var cameraRequester = CameraRequester()
     
     /// The maximum attachment size limit.
     let attachmentUploadSizeLimit = Measurement(
@@ -73,9 +73,9 @@ struct AttachmentImportMenu: View {
     @available(visionOS, unavailable)
     private func takePhotoOrVideoButton() -> Button<some View> {
         Button {
-            cameraRequester.request {
-                cameraIsShowing = true
-            } onAccessDenied: { }
+//            cameraRequester.request {
+//                cameraIsShowing = true
+//            } onAccessDenied: { }
         } label: {
             Text(cameraButtonLabel)
             Image(systemName: "camera")
@@ -120,7 +120,7 @@ struct AttachmentImportMenu: View {
                 .padding(5)
         }
         .disabled(importState.importInProgress)
-        .cameraRequester(cameraRequester)
+      //  .cameraRequester(cameraRequester)
         .alert(importFailureAlertTitle, isPresented: errorIsPresented) { } message: {
             Text(importFailureAlertMessage)
         }
